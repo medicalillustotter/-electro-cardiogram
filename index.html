@@ -92,37 +92,40 @@
       text-align: center;
     }
 
-    .btn-basic {
-      background-color: #ebf8ff;
-      color: #2b6cb0;
-      border: 2px solid #bee3f8;
-    }
-    .btn-basic:hover {
-      background-color: #3182ce;
-      color: white;
-      border-color: #3182ce;
-    }
-
-    .btn-arrhythmia {
+    /* 総論（基礎）：赤色 */
+    .btn-souron {
       background-color: #fff5f5;
       color: #c53030;
       border: 2px solid #feb2b2;
     }
-    .btn-arrhythmia:hover {
+    .btn-souron:hover {
       background-color: #e53e3e;
       color: white;
       border-color: #e53e3e;
     }
 
-    .btn-all {
-      background-color: #f7fafc;
-      color: #4a5568;
-      border: 2px solid #e2e8f0;
+    /* 各論（不整脈）：青色 */
+    .btn-kakuron {
+      background-color: #ebf8ff;
+      color: #2b6cb0;
+      border: 2px solid #bee3f8;
     }
-    .btn-all:hover {
-      background-color: #718096;
+    .btn-kakuron:hover {
+      background-color: #3182ce;
       color: white;
-      border-color: #718096;
+      border-color: #3182ce;
+    }
+
+    /* ランダム：黄色 */
+    .btn-random {
+      background-color: #fffff0;
+      color: #b7791f;
+      border: 2px solid #fefcbf;
+    }
+    .btn-random:hover {
+      background-color: #d69e2e;
+      color: white;
+      border-color: #d69e2e;
     }
 
     .category-badge {
@@ -146,7 +149,7 @@
     .image-container {
       text-align: center;
       margin-bottom: 20px;
-      background-color: #1a202c; /* 心電図波形が見やすい黒系枠 */
+      background-color: #1a202c;
       padding: 12px;
       border-radius: 8px;
     }
@@ -294,9 +297,9 @@
     <div id="mode-view" style="display: none;">
       <h3 style="margin-bottom: 16px; text-align: center; color: #4a5568;">学習モードを選択してください</h3>
       <div class="mode-selection">
-        <button class="mode-btn btn-basic" onclick="startMode('基礎編')">基礎編（正常波形・誘導・基本）</button>
-        <button class="mode-btn btn-arrhythmia" onclick="startMode('不整脈編')">不整脈編（各種不整脈の判定）</button>
-        <button class="mode-btn btn-all" onclick="startMode('総合ランダム')">全問題ランダム</button>
+        <button class="mode-btn btn-souron" onclick="startMode('総論（基礎）')">総論（基礎）</button>
+        <button class="mode-btn btn-kakuron" onclick="startMode('各論（不整脈）')">各論（不整脈）</button>
+        <button class="mode-btn btn-random" onclick="startMode('ランダム')">ランダム</button>
       </div>
     </div>
 
@@ -375,14 +378,14 @@
 
     // クイズの開始（指定モードの抽出）
     function startMode(selectedMode) {
-      if (selectedMode === '総合ランダム') {
+      if (selectedMode === 'ランダム') {
         currentQuestions = [...allQuestions].sort(() => Math.random() - 0.5);
       } else {
         currentQuestions = allQuestions.filter(q => q.category && q.category.trim() === selectedMode);
       }
 
       if (currentQuestions.length === 0) {
-        alert(`「${selectedMode}」に該当する問題が見つかりませんでした。\nスプレッドシートのA列(category)をご確認ください。`);
+        alert(`「${selectedMode}」に該当する問題が見つかりませんでした。\nスプレッドシートのA列(category)が「${selectedMode}」になっているかご確認ください。`);
         return;
       }
 
